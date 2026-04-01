@@ -8,105 +8,91 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0a; color: #fff; }
     body { display: flex; align-items: flex-start; justify-content: center; min-height: 100vh; padding: 2rem 1rem; }
-
     #app { width: 100%; max-width: 900px; background: #111; border-radius: 14px; overflow: hidden; position: relative; min-height: 600px; }
     .screen { display: none; padding: 2rem; flex-direction: column; min-height: 600px; }
     .screen.active { display: flex; }
-
     .logo { font-size: 0.9rem; font-weight: 600; color: #e53935; letter-spacing: 0.14em; margin-bottom: 1.75rem; }
     label { font-size: 0.72rem; color: #888; margin-bottom: 5px; display: block; letter-spacing: 0.07em; text-transform: uppercase; }
-
-    input[type="text"] {
-      width: 100%; background: #1a1a1a; border: 1.5px solid #2a2a2a;
-      border-radius: 8px; color: #fff; font-size: 1rem; padding: 13px 16px;
-      margin-bottom: 0.3rem; outline: none; transition: border-color 0.2s;
-      font-family: inherit;
-    }
+    input[type="text"] { width: 100%; background: #1a1a1a; border: 1.5px solid #2a2a2a; border-radius: 8px; color: #fff; font-size: 1rem; padding: 13px 16px; margin-bottom: 0.3rem; outline: none; transition: border-color 0.2s; font-family: inherit; }
     input[type="text"]:focus { border-color: #888; }
     input[type="text"].warn { border-color: #f9a825 !important; }
     input[type="text"].valid { border-color: #43a047 !important; }
-
+    input[type="text"].active-field { border-color: #e53935 !important; box-shadow: 0 0 0 2px rgba(229,57,53,0.18); }
+    input[type="text"].container-active { border-color: #1565c0 !important; box-shadow: 0 0 0 2px rgba(21,101,192,0.18); }
+    input[type="text"]:disabled { opacity: 0.3; cursor: not-allowed; }
     .field-wrap { margin-bottom: 1rem; }
     .field-hint { font-size: 0.75rem; color: #555; min-height: 1rem; padding-left: 2px; margin-top: 3px; }
     .field-hint.warn { color: #f9a825; }
-
     .dir-toggle { display: flex; gap: 10px; margin-bottom: 1.4rem; }
-    .dir-btn {
-      flex: 1; padding: 15px; border-radius: 8px; border: 1.5px solid #2a2a2a;
-      background: #1a1a1a; color: #666; font-size: 1rem; font-weight: 500;
-      cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em; font-family: inherit;
-    }
+    .dir-btn { flex: 1; padding: 15px; border-radius: 8px; border: 1.5px solid #2a2a2a; background: #1a1a1a; color: #666; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em; font-family: inherit; }
     .dir-btn.selected { border-color: #f9a825; background: #2a2200; color: #f9a825; box-shadow: 0 0 0 1px #f9a825; }
-
-    @keyframes pulse-green {
-      0%,100% { box-shadow: 0 0 0 0 rgba(67,160,71,0); background: #1b5e20; }
-      50% { box-shadow: 0 0 20px 6px rgba(67,160,71,0.45); background: #2e7d32; }
-    }
-    @keyframes flash-complete {
-      0%,100% { background: #c62828; box-shadow: 0 0 0 0 rgba(198,40,40,0); }
-      50% { background: #2e7d32; box-shadow: 0 0 20px 6px rgba(46,125,50,0.5); }
-    }
-
-    .btn-primary {
-      width: 100%; padding: 16px; background: #2a2a2a; border: none;
-      border-radius: 8px; color: #555; font-size: 1.1rem; font-weight: 500;
-      cursor: not-allowed; letter-spacing: 0.04em; font-family: inherit;
-      transition: background 0.3s, color 0.3s;
-    }
+    @keyframes pulse-green { 0%,100% { box-shadow: 0 0 0 0 rgba(67,160,71,0); background: #1b5e20; } 50% { box-shadow: 0 0 20px 6px rgba(67,160,71,0.45); background: #2e7d32; } }
+    @keyframes flash-complete { 0%,100% { background: #c62828; } 50% { background: #2e7d32; } }
+    .btn-primary { width: 100%; padding: 16px; background: #2a2a2a; border: none; border-radius: 8px; color: #555; font-size: 1.1rem; font-weight: 500; cursor: not-allowed; letter-spacing: 0.04em; font-family: inherit; transition: background 0.3s, color 0.3s; }
     .btn-primary.ready { color: #fff; cursor: pointer; animation: pulse-green 2s ease-in-out infinite; }
 
-    /* Scan screen */
     #scan-screen { padding: 1.5rem; }
-    .scan-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.1rem; gap: 1rem; }
+    .scan-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: 1rem; }
     .scan-header-left { min-width: 0; }
     .session-meta { font-size: 0.8rem; color: #666; }
     .session-meta span { color: #aaa; }
     .order-desc-disp { font-size: 0.8rem; color: #888; margin-top: 2px; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 380px; }
     .dir-badge { padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em; flex-shrink: 0; background: #2a2200; color: #f9a825; border: 1px solid #f9a825; }
 
-    .scan-row { display: flex; gap: 10px; margin-bottom: 6px; align-items: flex-start; }
+    .scan-inputs { margin-bottom: 8px; }
+    .scan-row { display: flex; gap: 10px; margin-bottom: 8px; align-items: center; }
     .scan-row input { flex: 1; font-size: 1.3rem; padding: 16px 18px; margin-bottom: 0; border-color: #333; background: #161616; }
-    .scan-row input:focus { border-color: #555; }
-    .manual-btn {
-      padding: 14px 16px; background: #1e1e1e; border: 1.5px solid #2a2a2a;
-      border-radius: 8px; color: #888; font-size: 0.8rem; font-weight: 500;
-      cursor: pointer; white-space: nowrap; font-family: inherit;
-      transition: all 0.15s; line-height: 1.3; text-align: center; flex-shrink: 0;
-    }
+    .container-row { display: flex; gap: 10px; align-items: center; margin-bottom: 0; }
+    .container-row input { flex: 1; font-size: 1.1rem; padding: 12px 16px; margin-bottom: 0; border-color: #222; background: #141414; }
+    .container-toggle { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .container-toggle-label { font-size: 0.72rem; color: #555; letter-spacing: 0.05em; text-transform: uppercase; white-space: nowrap; }
+    .toggle-switch { position: relative; width: 38px; height: 22px; flex-shrink: 0; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #2a2a2a; border-radius: 22px; transition: 0.2s; border: 1px solid #333; }
+    .toggle-slider:before { position: absolute; content: ''; height: 16px; width: 16px; left: 2px; bottom: 2px; background: #555; border-radius: 50%; transition: 0.2s; }
+    .toggle-switch input:checked + .toggle-slider { background: #1565c0; border-color: #1565c0; }
+    .toggle-switch input:checked + .toggle-slider:before { transform: translateX(16px); background: #fff; }
+    .lock-container-row { display: flex; align-items: center; gap: 8px; margin-top: 7px; padding: 8px 12px; background: #161616; border-radius: 8px; border: 1px solid #1e1e1e; }
+    .lock-container-row label { font-size: 0.78rem; color: #666; margin: 0; letter-spacing: 0; text-transform: none; cursor: pointer; }
+    .lock-container-row input[type="checkbox"] { accent-color: #1565c0; width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; }
+    .locked-container-display { font-size: 0.78rem; color: #90caf9; margin-left: auto; font-family: 'Courier New', monospace; }
+    .step-indicator { display: none; align-items: center; gap: 8px; margin: 8px 0 4px; }
+    .step-pill { font-size: 0.72rem; padding: 4px 12px; border-radius: 12px; font-weight: 500; letter-spacing: 0.05em; transition: all 0.2s; }
+    .step-asset { background: #1e1010; color: #888; border: 1px solid #333; }
+    .step-asset.active { background: #e53935; color: #fff; border-color: #e53935; }
+    .step-container { background: #0d1f35; color: #555; border: 1px solid #222; }
+    .step-container.active { background: #1565c0; color: #fff; border-color: #1565c0; }
+    .step-arrow { color: #444; font-size: 0.8rem; }
+    .manual-btn { padding: 13px 15px; background: #1e1e1e; border: 1.5px solid #2a2a2a; border-radius: 8px; color: #888; font-size: 0.78rem; font-weight: 500; cursor: pointer; white-space: nowrap; font-family: inherit; transition: all 0.15s; line-height: 1.3; text-align: center; flex-shrink: 0; }
     .manual-btn:hover { border-color: #555; color: #ccc; }
-    .scan-hint { font-size: 0.75rem; color: #444; margin-bottom: 14px; }
+    .scan-hint { font-size: 0.75rem; color: #444; margin: 4px 0 10px; }
 
     .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; flex: 1; min-height: 0; }
-    .panel { background: #1a1a1a; border-radius: 10px; border: 1px solid #222; display: flex; flex-direction: column; overflow: hidden; min-height: 180px; }
+    .panel { background: #1a1a1a; border-radius: 10px; border: 1px solid #222; display: flex; flex-direction: column; overflow: hidden; min-height: 160px; }
     .panel-title { font-size: 0.72rem; color: #666; letter-spacing: 0.08em; text-transform: uppercase; padding: 10px 14px; border-bottom: 1px solid #222; flex-shrink: 0; }
-
     .recent-list, .totals-list, .search-results { flex: 1; overflow-y: auto; }
-    .recent-item, .totals-item, .search-result { display: flex; align-items: center; padding: 9px 13px; border-bottom: 1px solid #1e1e1e; gap: 8px; }
+    .recent-item, .totals-item, .search-result { display: flex; align-items: center; padding: 8px 12px; border-bottom: 1px solid #1e1e1e; gap: 6px; }
     .recent-item:last-child, .totals-item:last-child, .search-result:last-child { border-bottom: none; }
-
-    .recent-asset, .totals-asset, .sr-asset { font-size: 0.9rem; color: #ddd; flex: 1; font-family: 'Courier New', monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .recent-qty, .sr-qty { font-size: 0.8rem; color: #888; min-width: 28px; text-align: right; flex-shrink: 0; }
-    .recent-time { font-size: 0.7rem; color: #444; min-width: 52px; text-align: right; flex-shrink: 0; }
-    .totals-count { font-size: 1.1rem; font-weight: 500; color: #fff; min-width: 36px; text-align: right; flex-shrink: 0; }
+    .recent-asset, .totals-asset, .sr-asset { font-size: 0.88rem; color: #ddd; flex: 1; font-family: 'Courier New', monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+    .recent-container, .totals-container { font-size: 0.7rem; color: #4a90d9; font-family: 'Courier New', monospace; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
+    .recent-qty { font-size: 0.8rem; color: #888; min-width: 24px; text-align: right; flex-shrink: 0; }
+    .totals-count { font-size: 1.05rem; font-weight: 500; color: #fff; min-width: 28px; text-align: right; flex-shrink: 0; }
+    .sr-qty { font-size: 0.78rem; color: #888; flex-shrink: 0; }
     .sr-found { font-size: 0.7rem; color: #4caf50; flex-shrink: 0; }
     .sr-not-found { font-size: 0.85rem; color: #555; text-align: center; padding: 1.5rem 1rem; }
     .empty-msg { color: #333; font-size: 0.85rem; text-align: center; padding: 2rem 1rem; }
-
-    .icon-btn { background: none; border: none; cursor: pointer; font-size: 0.9rem; padding: 3px 5px; border-radius: 4px; transition: color 0.15s; line-height: 1; flex-shrink: 0; }
+    .icon-btn { background: none; border: none; cursor: pointer; font-size: 0.85rem; padding: 3px 4px; border-radius: 4px; transition: color 0.15s; line-height: 1; flex-shrink: 0; }
     .edit-btn { color: #555; } .edit-btn:hover { color: #90caf9; }
     .remove-btn { color: #444; } .remove-btn:hover { color: #e53935; }
-
-    .search-area { padding: 9px 13px; border-bottom: 1px solid #222; flex-shrink: 0; }
-    .search-area input { margin-bottom: 0; font-size: 0.9rem; padding: 9px 12px; background: #111; border-color: #222; }
+    .search-area { padding: 8px 12px; border-bottom: 1px solid #222; flex-shrink: 0; }
+    .search-area input { margin-bottom: 0; font-size: 0.88rem; padding: 9px 12px; background: #111; border-color: #222; }
     .search-area input:focus { border-color: #555; }
-
-    .bottom-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 14px; }
+    .bottom-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 12px; }
     .total-pill { font-size: 0.9rem; color: #777; white-space: nowrap; }
     .total-pill span { font-size: 1.2rem; font-weight: 500; color: #fff; }
     .finish-btn { padding: 15px 28px; background: #e53935; border: none; border-radius: 8px; color: #fff; font-size: 1rem; font-weight: 500; cursor: pointer; letter-spacing: 0.04em; white-space: nowrap; font-family: inherit; transition: background 0.15s; }
     .finish-btn:hover { background: #c62828; }
 
-    /* Summary screen */
     #summary-screen { padding: 1.75rem; }
     .summary-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 1.25rem; }
     .stat-card { background: #1a1a1a; border-radius: 8px; padding: 1rem; border: 1px solid #222; text-align: center; }
@@ -115,22 +101,21 @@
     .order-desc-banner { background: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 8px; padding: 10px 14px; margin-bottom: 1.25rem; font-size: 0.85rem; color: #888; }
     .order-desc-banner span { color: #ccc; font-style: italic; }
     .summary-list { background: #1a1a1a; border-radius: 10px; border: 1px solid #222; overflow: hidden; flex: 1; display: flex; flex-direction: column; min-height: 0; }
-    .summary-list-inner { overflow-y: auto; flex: 1; max-height: 280px; }
+    .summary-list-inner { overflow-y: auto; flex: 1; max-height: 260px; }
     .summary-item { display: flex; padding: 9px 14px; border-bottom: 1px solid #1e1e1e; gap: 10px; align-items: center; }
     .summary-item:last-child { border-bottom: none; }
     .si-num { font-size: 0.72rem; color: #444; min-width: 28px; }
     .si-id { font-size: 0.9rem; color: #ddd; flex: 1; font-family: 'Courier New', monospace; }
     .si-qty { font-size: 0.85rem; color: #888; min-width: 36px; text-align: right; }
-    .si-ts { font-size: 0.72rem; color: #444; min-width: 76px; text-align: right; }
+    .si-container { font-size: 0.78rem; color: #4a90d9; min-width: 90px; text-align: right; font-family: 'Courier New', monospace; }
     .summary-actions { display: flex; gap: 10px; margin-top: 14px; }
     .btn-secondary { flex: 1; padding: 14px; background: #1e1e1e; border: 1.5px solid #2a2a2a; border-radius: 8px; color: #aaa; font-size: 0.95rem; font-weight: 500; cursor: pointer; font-family: inherit; transition: all 0.15s; }
     .btn-secondary:hover { border-color: #555; color: #fff; }
-    .btn-save { flex: 2; padding: 14px; background: #e53935; border: none; border-radius: 8px; color: #fff; font-size: 1rem; font-weight: 500; cursor: pointer; font-family: inherit; transition: background 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-save { flex: 2; padding: 14px; background: #e53935; border: none; border-radius: 8px; color: #fff; font-size: 1rem; font-weight: 500; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s; }
     .btn-save:hover { background: #c62828; }
     .btn-save:disabled { background: #555; cursor: not-allowed; }
 
-    /* Complete screen */
-    #complete-screen { justify-content: center; align-items: center; text-align: center; gap: 0; }
+    #complete-screen { justify-content: center; align-items: center; text-align: center; }
     .complete-icon { font-size: 4rem; margin-bottom: 0.75rem; color: #4caf50; }
     .complete-title { font-size: 1.8rem; font-weight: 500; color: #4caf50; margin-bottom: 0.4rem; }
     .complete-subtitle { font-size: 0.82rem; color: #555; margin-bottom: 1.5rem; font-family: 'Courier New', monospace; word-break: break-all; padding: 0 1rem; }
@@ -141,21 +126,16 @@
     .complete-row-val { color: #ddd; text-align: right; }
     .btn-complete { padding: 20px 56px; border: none; border-radius: 10px; color: #fff; font-size: 1.2rem; font-weight: 500; cursor: pointer; font-family: inherit; letter-spacing: 0.05em; animation: flash-complete 1.4s ease-in-out infinite; }
 
-    /* Flash overlay */
     #flash { position: fixed; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; opacity: 0; z-index: 100; transition: opacity 0.06s; }
-
-    /* Modals */
     .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); z-index: 200; display: none; align-items: center; justify-content: center; padding: 1rem; }
     .modal-overlay.show { display: flex; }
     .modal { background: #1e1e1e; border-radius: 12px; padding: 1.75rem; max-width: 440px; width: 100%; }
-    .modal.danger { border: 1.5px solid #e53935; }
-    .modal.warning { border: 1.5px solid #f9a825; }
-    .modal.info { border: 1.5px solid #1565c0; }
+    .modal.danger { border: 1.5px solid #e53935; } .modal.warning { border: 1.5px solid #f9a825; } .modal.info { border: 1.5px solid #1565c0; }
     .modal h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 0.6rem; }
     .modal.danger h3 { color: #f55; } .modal.warning h3 { color: #ffb300; } .modal.info h3 { color: #90caf9; }
     .modal p { font-size: 0.9rem; color: #999; line-height: 1.65; margin-bottom: 1rem; }
     .modal-asset { font-size: 1rem; color: #fff; background: #111; padding: 10px 14px; border-radius: 6px; margin-bottom: 1.2rem; font-family: 'Courier New', monospace; word-break: break-all; }
-    .modal-row { display: flex; gap: 8px; }
+    .modal-row { display: flex; gap: 8px; margin-bottom: 8px; }
     .modal-row input { flex: 1; background: #111; border: 1.5px solid #2a2a2a; border-radius: 8px; color: #fff; font-size: 0.95rem; padding: 12px 14px; outline: none; font-family: inherit; margin-bottom: 0; }
     .modal-row input:focus { border-color: #90caf9; }
     .modal-btn { padding: 12px 18px; border-radius: 8px; font-size: 0.9rem; font-weight: 500; cursor: pointer; border: none; font-family: inherit; white-space: nowrap; }
@@ -167,39 +147,28 @@
   </style>
 </head>
 <body>
-
 <div id="flash"></div>
-
 <div id="app">
 
   <!-- SETUP -->
-  <div id="setup-screen" class="screen active" style="justify-content:center; max-width:520px; margin:0 auto; width:100%;">
+  <div id="setup-screen" class="screen active" style="justify-content:center;max-width:520px;margin:0 auto;width:100%;">
     <div class="logo">SOLOTECH</div>
-    <h1 style="font-size:2rem; margin-bottom:0.2rem;">Asset Scanner</h1>
-    <p style="color:#555; margin-bottom:2rem; font-size:0.9rem;">Offline inventory tracking — exports to CSV</p>
-
+    <h1 style="font-size:2rem;margin-bottom:0.2rem;">Asset Scanner</h1>
+    <p style="color:#555;margin-bottom:2rem;font-size:0.9rem;">Offline inventory tracking — exports to CSV</p>
     <label>User ID</label>
-    <div class="field-wrap">
-      <input type="text" id="user-id" placeholder="e.g. jsmith" autocomplete="off" />
-    </div>
-
+    <div class="field-wrap"><input type="text" id="user-id" placeholder="e.g. jsmith" autocomplete="off" /></div>
     <label>R2 Order ID</label>
     <div class="field-wrap">
       <input type="text" id="order-id" placeholder="e.g. NAS000123" autocomplete="off" style="text-transform:uppercase;" />
       <div class="field-hint" id="order-hint"></div>
     </div>
-
-    <label>Order name / description <span style="color:#444; font-size:0.7rem; letter-spacing:0; text-transform:none; font-weight:400;">— helps identify the order if there's an issue later</span></label>
-    <div class="field-wrap">
-      <input type="text" id="order-desc" placeholder="e.g. Taylor Swift LX Main" autocomplete="off" />
-    </div>
-
+    <label>Order name / description <span style="color:#444;font-size:0.7rem;letter-spacing:0;text-transform:none;font-weight:400;">— helps identify the order if there's an issue later</span></label>
+    <div class="field-wrap"><input type="text" id="order-desc" placeholder="e.g. Taylor Swift LX Main" autocomplete="off" /></div>
     <label>Direction</label>
     <div class="dir-toggle">
       <button class="dir-btn" id="btn-in" onclick="selectDir('IN')">IN — Receiving</button>
       <button class="dir-btn" id="btn-out" onclick="selectDir('OUT')">OUT — Despatch</button>
     </div>
-
     <button class="btn-primary" id="start-btn" onclick="startSession()">Start Scanning Session</button>
   </div>
 
@@ -214,27 +183,48 @@
       <div id="disp-dir" class="dir-badge"></div>
     </div>
 
-    <div class="scan-row">
-      <input type="text" id="scan-input" placeholder="Scan asset ID and press Enter..." autocomplete="off" autocorrect="off" spellcheck="false" />
-      <button class="manual-btn" onclick="openManual()">Manual<br>Entry</button>
+    <div class="scan-inputs">
+      <div class="scan-row">
+        <input type="text" id="scan-input" placeholder="Scan Asset ID..." autocomplete="off" autocorrect="off" spellcheck="false" />
+        <button class="manual-btn" onclick="openManual()">Manual<br>Entry</button>
+      </div>
+      <div class="container-row">
+        <input type="text" id="container-input" placeholder="Container ID..." autocomplete="off" autocorrect="off" spellcheck="false" disabled />
+        <div class="container-toggle">
+          <span class="container-toggle-label">Container</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="container-toggle" onchange="toggleContainerMode()" />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="lock-container-row" id="lock-row" style="display:none;">
+        <input type="checkbox" id="lock-container-cb" onchange="toggleLockContainer()" />
+        <label for="lock-container-cb">Lock container across scans</label>
+        <span class="locked-container-display" id="locked-display"></span>
+      </div>
     </div>
-    <div class="scan-hint">Keep focus on this field — barcode scanner fires on Enter</div>
+
+    <div class="step-indicator" id="step-indicator">
+      <span class="step-pill step-asset active" id="step-asset">Asset ID</span>
+      <span class="step-arrow">›</span>
+      <span class="step-pill step-container" id="step-container">Container ID</span>
+    </div>
+    <div class="scan-hint">Barcode scanner fires on Enter — focus follows automatically</div>
 
     <div class="main-grid">
       <div class="panel">
         <div class="panel-title">Recent scans (last 10)</div>
         <div class="recent-list" id="recent-list"><div class="empty-msg">No scans yet</div></div>
       </div>
-      <div style="display:flex; flex-direction:column; gap:12px; min-height:0;">
+      <div style="display:flex;flex-direction:column;gap:12px;min-height:0;">
         <div class="panel" style="flex:1;">
           <div class="panel-title">Asset totals</div>
           <div class="totals-list" id="totals-list"><div class="empty-msg">No scans yet</div></div>
         </div>
         <div class="panel" style="flex:1;">
           <div class="panel-title">Search scans</div>
-          <div class="search-area">
-            <input type="text" id="search-input" placeholder="Type asset ID..." autocomplete="off" autocorrect="off" spellcheck="false" />
-          </div>
+          <div class="search-area"><input type="text" id="search-input" placeholder="Type asset ID..." autocomplete="off" /></div>
           <div class="search-results" id="search-results"><div class="sr-not-found">Type to search</div></div>
         </div>
       </div>
@@ -249,8 +239,8 @@
   <!-- SUMMARY -->
   <div id="summary-screen" class="screen">
     <div class="logo">SOLOTECH</div>
-    <h1 style="font-size:1.5rem; margin-bottom:0.15rem;">Session Summary</h1>
-    <p style="color:#555; font-size:0.85rem; margin-bottom:1rem;" id="summary-meta"></p>
+    <h1 style="font-size:1.5rem;margin-bottom:0.15rem;">Session Summary</h1>
+    <p style="color:#555;font-size:0.85rem;margin-bottom:1rem;" id="summary-meta"></p>
     <div id="summary-desc-banner" class="order-desc-banner" style="display:none;">Description: <span id="summary-desc-text"></span></div>
     <div class="summary-stats">
       <div class="stat-card"><div class="stat-val" id="s-total">0</div><div class="stat-label">Total qty</div></div>
@@ -258,16 +248,16 @@
       <div class="stat-card"><div class="stat-val" id="s-dir">—</div><div class="stat-label">Direction</div></div>
     </div>
     <div class="summary-list">
-      <div style="display:flex; background:#161616; border-bottom:1px solid #222; flex-shrink:0;">
+      <div style="display:flex;background:#161616;border-bottom:1px solid #222;flex-shrink:0;">
         <div style="font-size:0.7rem;color:#555;padding:8px 14px;min-width:32px;">#</div>
         <div style="font-size:0.7rem;color:#555;padding:8px 14px;flex:1;letter-spacing:0.06em;text-transform:uppercase;">Asset ID</div>
         <div style="font-size:0.7rem;color:#555;padding:8px 14px;min-width:44px;text-align:right;letter-spacing:0.06em;text-transform:uppercase;">Qty</div>
-        <div style="font-size:0.7rem;color:#555;padding:8px 14px;min-width:80px;text-align:right;letter-spacing:0.06em;text-transform:uppercase;">Time</div>
+        <div style="font-size:0.7rem;color:#555;padding:8px 14px;min-width:100px;text-align:right;letter-spacing:0.06em;text-transform:uppercase;">Container</div>
       </div>
       <div class="summary-list-inner" id="summary-list-inner"></div>
     </div>
     <div class="summary-actions">
-      <button class="btn-secondary" onclick="showScreen('scan-screen'); setTimeout(()=>document.getElementById('scan-input').focus(),50);">&#8592; Back</button>
+      <button class="btn-secondary" onclick="showScreen('scan-screen');restoreScanFocus();">&#8592; Back</button>
       <button class="btn-save" id="save-btn" onclick="saveSession()">Save &amp; Finish</button>
     </div>
   </div>
@@ -280,14 +270,13 @@
     <div class="complete-details" id="complete-details"></div>
     <button class="btn-complete" onclick="completeSession()">Complete Session</button>
   </div>
-
 </div>
 
 <!-- MODALS -->
 <div class="modal-overlay" id="dup-modal">
   <div class="modal warning">
     <h3>Duplicate scan detected</h3>
-    <p>This asset has already been scanned. If this is a non-serialised item, enter the total qty — or press Ignore to discard this scan.</p>
+    <p>This asset has already been scanned. If this is a non-serialised item, enter the total qty — or press Ignore to discard.</p>
     <div class="modal-asset" id="dup-asset-id"></div>
     <div class="modal-row">
       <input type="text" id="dup-qty" placeholder="Total qty for this asset" inputmode="numeric" />
@@ -311,13 +300,16 @@
 
 <div class="modal-overlay" id="edit-modal">
   <div class="modal info">
-    <h3>Edit quantity</h3>
-    <p>Update the quantity for this asset.</p>
+    <h3>Edit asset</h3>
+    <p>Update the quantity and/or container for this asset.</p>
     <div class="modal-asset" id="edit-asset-id"></div>
     <div class="modal-row">
-      <input type="text" id="edit-qty" placeholder="New qty" inputmode="numeric" />
-      <button class="modal-btn modal-confirm-blue" onclick="confirmEdit()">Save</button>
-      <button class="modal-btn modal-cancel" onclick="cancelEdit()">Cancel</button>
+      <input type="text" id="edit-qty" placeholder="Qty" inputmode="numeric" style="max-width:110px;" />
+      <input type="text" id="edit-container" placeholder="Container ID" autocomplete="off" />
+    </div>
+    <div class="modal-row" style="margin-top:4px;">
+      <button class="modal-btn modal-confirm-blue modal-full" onclick="confirmEdit()">Save</button>
+      <button class="modal-btn modal-cancel modal-full" onclick="cancelEdit()">Cancel</button>
     </div>
   </div>
 </div>
@@ -325,14 +317,17 @@
 <div class="modal-overlay" id="manual-modal">
   <div class="modal info">
     <h3>Manual entry</h3>
-    <p>Type the asset ID and quantity manually — use this when a barcode won't scan.</p>
-    <div class="modal-row" style="margin-bottom:10px;">
+    <p>Type the asset ID, quantity, and optionally a container ID.</p>
+    <div class="modal-row" style="margin-bottom:8px;">
       <input type="text" id="manual-id" placeholder="Asset ID" autocomplete="off" autocorrect="off" spellcheck="false" />
     </div>
+    <div class="modal-row" style="margin-bottom:8px;">
+      <input type="text" id="manual-qty" placeholder="Qty (default 1)" inputmode="numeric" style="max-width:130px;" />
+      <input type="text" id="manual-container" placeholder="Container ID (optional)" autocomplete="off" />
+    </div>
     <div class="modal-row">
-      <input type="text" id="manual-qty" placeholder="Qty (default 1)" inputmode="numeric" />
-      <button class="modal-btn modal-confirm-blue" onclick="confirmManual()">Add</button>
-      <button class="modal-btn modal-cancel" onclick="cancelManual()">Cancel</button>
+      <button class="modal-btn modal-confirm-blue modal-full" onclick="confirmManual()">Add</button>
+      <button class="modal-btn modal-cancel modal-full" onclick="cancelManual()">Cancel</button>
     </div>
     <div class="field-error" id="manual-error" style="margin-top:8px;"></div>
   </div>
@@ -343,12 +338,15 @@
   let sessionUser = '', sessionOrder = '', sessionDesc = '';
   let pendingDup = null, pendingRemove = null, pendingEdit = null;
   let savedCSV = '', savedFilename = '';
+  let containerMode = false, lockContainer = false, lockedContainerID = '';
+  let awaitingContainer = false, pendingAssetID = '';
 
   const userInput = document.getElementById('user-id');
   const orderInput = document.getElementById('order-id');
   const descInput = document.getElementById('order-desc');
   const startBtn = document.getElementById('start-btn');
   const scanInput = document.getElementById('scan-input');
+  const containerInput = document.getElementById('container-input');
   const searchInput = document.getElementById('search-input');
 
   const ORDER_STRICT = /^[A-Za-z]{3}\d+$/;
@@ -358,25 +356,12 @@
     const oid = orderInput.value.trim();
     const hintEl = document.getElementById('order-hint');
     if (oid) {
-      if (!ORDER_LOOSE.test(oid)) {
-        hintEl.textContent = 'Order ID should start with letters followed by numbers — please double-check.';
-        hintEl.className = 'field-hint warn';
-        orderInput.classList.add('warn'); orderInput.classList.remove('valid');
-      } else if (!ORDER_STRICT.test(oid)) {
-        hintEl.textContent = 'Looks like a transfer order (longer prefix) — please double-check.';
-        hintEl.className = 'field-hint warn';
-        orderInput.classList.add('warn'); orderInput.classList.remove('valid');
-      } else {
-        hintEl.textContent = ''; hintEl.className = 'field-hint';
-        orderInput.classList.remove('warn'); orderInput.classList.add('valid');
-      }
-    } else {
-      hintEl.textContent = ''; hintEl.className = 'field-hint';
-      orderInput.classList.remove('warn', 'valid');
-    }
+      if (!ORDER_LOOSE.test(oid)) { hintEl.textContent = 'Order ID should start with letters followed by numbers — please double-check.'; hintEl.className = 'field-hint warn'; orderInput.classList.add('warn'); orderInput.classList.remove('valid'); }
+      else if (!ORDER_STRICT.test(oid)) { hintEl.textContent = 'Looks like a transfer order (longer prefix) — please double-check.'; hintEl.className = 'field-hint warn'; orderInput.classList.add('warn'); orderInput.classList.remove('valid'); }
+      else { hintEl.textContent = ''; hintEl.className = 'field-hint'; orderInput.classList.remove('warn'); orderInput.classList.add('valid'); }
+    } else { hintEl.textContent = ''; hintEl.className = 'field-hint'; orderInput.classList.remove('warn','valid'); }
     startBtn.classList.toggle('ready', !!(userInput.value.trim() && oid && direction));
   }
-
   userInput.addEventListener('input', checkReady);
   orderInput.addEventListener('input', checkReady);
 
@@ -393,13 +378,17 @@
     sessionOrder = orderInput.value.trim().toUpperCase();
     sessionDesc = descInput.value.trim();
     assets = []; scanLog = [];
+    containerMode = false; lockContainer = false; lockedContainerID = ''; awaitingContainer = false; pendingAssetID = '';
+    document.getElementById('container-toggle').checked = false;
+    document.getElementById('lock-container-cb').checked = false;
     document.getElementById('disp-order').textContent = sessionOrder;
     document.getElementById('disp-user').textContent = sessionUser;
     const dd = document.getElementById('disp-desc');
     if (sessionDesc) { dd.textContent = sessionDesc; dd.style.display = 'block'; } else { dd.style.display = 'none'; }
     document.getElementById('disp-dir').textContent = direction === 'IN' ? 'IN — Receiving' : 'OUT — Despatch';
+    updateContainerUI();
     showScreen('scan-screen');
-    setTimeout(() => scanInput.focus(), 100);
+    setTimeout(() => restoreScanFocus(), 100);
     render();
   }
 
@@ -408,30 +397,107 @@
     document.getElementById(id).classList.add('active');
   }
 
-  scanInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') { const v = scanInput.value.trim(); if (v) { processAsset(v); scanInput.value = ''; } }
-  });
-  document.getElementById('dup-qty').addEventListener('keydown', e => { if (e.key === 'Enter') confirmDup(); });
-  document.getElementById('edit-qty').addEventListener('keydown', e => { if (e.key === 'Enter') confirmEdit(); });
-  document.getElementById('manual-id').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('manual-qty').focus(); });
-  document.getElementById('manual-qty').addEventListener('keydown', e => { if (e.key === 'Enter') confirmManual(); });
-  searchInput.addEventListener('input', renderSearch);
+  // Container mode
+  function toggleContainerMode() {
+    containerMode = document.getElementById('container-toggle').checked;
+    if (!containerMode) { lockContainer = false; document.getElementById('lock-container-cb').checked = false; lockedContainerID = ''; awaitingContainer = false; pendingAssetID = ''; }
+    updateContainerUI(); restoreScanFocus();
+  }
 
-  function processAsset(id) {
+  function toggleLockContainer() {
+    lockContainer = document.getElementById('lock-container-cb').checked;
+    if (!lockContainer) { lockedContainerID = ''; updateLockedDisplay(); }
+    restoreScanFocus();
+  }
+
+  function updateContainerUI() {
+    containerInput.disabled = !containerMode;
+    document.getElementById('lock-row').style.display = containerMode ? 'flex' : 'none';
+    document.getElementById('step-indicator').style.display = containerMode ? 'flex' : 'none';
+    updateStepIndicator(); updateLockedDisplay();
+  }
+
+  function updateStepIndicator() {
+    if (!containerMode) return;
+    document.getElementById('step-asset').classList.toggle('active', !awaitingContainer);
+    document.getElementById('step-container').classList.toggle('active', awaitingContainer);
+  }
+
+  function updateLockedDisplay() {
+    document.getElementById('locked-display').textContent = (lockContainer && lockedContainerID) ? '\uD83D\uDD12 ' + lockedContainerID : '';
+  }
+
+  function restoreScanFocus() {
+    if (containerMode && awaitingContainer) {
+      scanInput.classList.remove('active-field');
+      containerInput.classList.add('container-active'); containerInput.classList.remove('active-field');
+      containerInput.focus();
+    } else {
+      scanInput.classList.add('active-field'); scanInput.classList.remove('container-active');
+      containerInput.classList.remove('container-active','active-field');
+      scanInput.focus();
+    }
+    updateStepIndicator();
+  }
+
+  // Scan handlers
+  scanInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const v = scanInput.value.trim(); if (!v) return;
+    scanInput.value = '';
+    if (containerMode) {
+      pendingAssetID = v;
+      awaitingContainer = true;
+      if (lockContainer && lockedContainerID) {
+        commitAsset(v, lockedContainerID);
+        awaitingContainer = false; pendingAssetID = '';
+        restoreScanFocus();
+      } else {
+        containerInput.value = '';
+        restoreScanFocus();
+      }
+    } else {
+      processAsset(v, '');
+    }
+  });
+
+  containerInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const v = containerInput.value.trim(); if (!v) return;
+    containerInput.value = '';
+    if (lockContainer) { lockedContainerID = v; updateLockedDisplay(); }
+    commitAsset(pendingAssetID, v);
+    awaitingContainer = false; pendingAssetID = '';
+    restoreScanFocus();
+  });
+
+  function commitAsset(assetID, containerID) {
+    if (assets.find(a => a.id === assetID)) {
+      pendingDup = { id: assetID, container: containerID };
+      document.getElementById('dup-asset-id').textContent = assetID;
+      document.getElementById('dup-qty').value = '';
+      document.getElementById('dup-modal').classList.add('show');
+      setTimeout(() => document.getElementById('dup-qty').focus(), 50);
+      flash('#c62828'); playError();
+    } else { addAsset(assetID, 1, containerID); flash('#1b5e20'); playDing(); }
+  }
+
+  function processAsset(id, containerID) {
     if (assets.find(a => a.id === id)) {
-      pendingDup = id;
+      pendingDup = { id, container: containerID };
       document.getElementById('dup-asset-id').textContent = id;
       document.getElementById('dup-qty').value = '';
       document.getElementById('dup-modal').classList.add('show');
       setTimeout(() => document.getElementById('dup-qty').focus(), 50);
       flash('#c62828'); playError();
-    } else { addAsset(id, 1); flash('#1b5e20'); playDing(); }
+    } else { addAsset(id, 1, containerID); flash('#1b5e20'); playDing(); }
   }
 
-  function addAsset(id, qty) {
+  function addAsset(id, qty, containerID) {
     const now = new Date();
-    assets.push({ id, qty, ts: now });
-    scanLog.unshift({ id, qty, ts: now });
+    const entry = { id, qty, container: containerID || '', ts: now };
+    assets.push(entry);
+    scanLog.unshift(entry);
     if (scanLog.length > 10) scanLog = scanLog.slice(0, 10);
     render();
   }
@@ -439,44 +505,47 @@
   function confirmDup() {
     const val = parseInt(document.getElementById('dup-qty').value.trim());
     if (pendingDup && !isNaN(val) && val > 0) {
-      const e = assets.find(a => a.id === pendingDup); if (e) { e.qty = val; e.ts = new Date(); }
-      const l = scanLog.find(s => s.id === pendingDup); if (l) { l.qty = val; l.ts = new Date(); }
+      const a = assets.find(x => x.id === pendingDup.id);
+      if (a) { a.qty = val; a.ts = new Date(); if (pendingDup.container) a.container = pendingDup.container; }
+      const l = scanLog.find(x => x.id === pendingDup.id);
+      if (l) { l.qty = val; if (pendingDup.container) l.container = pendingDup.container; }
       render(); flash('#1b5e20'); playDing();
     }
     closeDupModal();
   }
   function ignoreDup() { closeDupModal(); }
-  function closeDupModal() { pendingDup = null; document.getElementById('dup-modal').classList.remove('show'); scanInput.focus(); }
+  function closeDupModal() { pendingDup = null; document.getElementById('dup-modal').classList.remove('show'); restoreScanFocus(); }
 
   function promptRemove(id) { pendingRemove = id; document.getElementById('remove-asset-id').textContent = id; document.getElementById('remove-modal').classList.add('show'); }
   function confirmRemove() {
     if (pendingRemove) { assets = assets.filter(a => a.id !== pendingRemove); scanLog = scanLog.filter(s => s.id !== pendingRemove); pendingRemove = null; render(); }
-    document.getElementById('remove-modal').classList.remove('show'); scanInput.focus();
+    document.getElementById('remove-modal').classList.remove('show'); restoreScanFocus();
   }
-  function cancelRemove() { pendingRemove = null; document.getElementById('remove-modal').classList.remove('show'); scanInput.focus(); }
+  function cancelRemove() { pendingRemove = null; document.getElementById('remove-modal').classList.remove('show'); restoreScanFocus(); }
 
   function promptEdit(id) {
     pendingEdit = id;
-    const asset = assets.find(a => a.id === id);
+    const a = assets.find(x => x.id === id);
     document.getElementById('edit-asset-id').textContent = id;
-    document.getElementById('edit-qty').value = asset ? asset.qty : '';
+    document.getElementById('edit-qty').value = a ? a.qty : '';
+    document.getElementById('edit-container').value = a ? a.container : '';
     document.getElementById('edit-modal').classList.add('show');
     setTimeout(() => { const el = document.getElementById('edit-qty'); el.focus(); el.select(); }, 50);
   }
   function confirmEdit() {
     const val = parseInt(document.getElementById('edit-qty').value.trim());
+    const cont = document.getElementById('edit-container').value.trim();
     if (pendingEdit && !isNaN(val) && val > 0) {
-      const a = assets.find(x => x.id === pendingEdit); if (a) a.qty = val;
-      const l = scanLog.find(x => x.id === pendingEdit); if (l) l.qty = val;
+      const a = assets.find(x => x.id === pendingEdit); if (a) { a.qty = val; a.container = cont; }
+      const l = scanLog.find(x => x.id === pendingEdit); if (l) { l.qty = val; l.container = cont; }
       render();
     }
-    pendingEdit = null; document.getElementById('edit-modal').classList.remove('show'); scanInput.focus();
+    pendingEdit = null; document.getElementById('edit-modal').classList.remove('show'); restoreScanFocus();
   }
-  function cancelEdit() { pendingEdit = null; document.getElementById('edit-modal').classList.remove('show'); scanInput.focus(); }
+  function cancelEdit() { pendingEdit = null; document.getElementById('edit-modal').classList.remove('show'); restoreScanFocus(); }
 
   function openManual() {
-    document.getElementById('manual-id').value = '';
-    document.getElementById('manual-qty').value = '';
+    ['manual-id','manual-qty','manual-container'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('manual-error').textContent = '';
     document.getElementById('manual-modal').classList.add('show');
     setTimeout(() => document.getElementById('manual-id').focus(), 50);
@@ -484,27 +553,40 @@
   function confirmManual() {
     const id = document.getElementById('manual-id').value.trim();
     const qtyRaw = document.getElementById('manual-qty').value.trim();
+    const cont = document.getElementById('manual-container').value.trim();
     const qty = qtyRaw ? parseInt(qtyRaw) : 1;
     const errEl = document.getElementById('manual-error');
     if (!id) { errEl.textContent = 'Asset ID is required.'; return; }
     if (isNaN(qty) || qty < 1) { errEl.textContent = 'Qty must be a number greater than 0.'; return; }
-    if (assets.find(a => a.id === id)) { errEl.textContent = 'Already in session — use edit qty or remove instead.'; return; }
+    if (assets.find(a => a.id === id)) { errEl.textContent = 'Already in session — use edit or remove instead.'; return; }
     errEl.textContent = '';
-    addAsset(id, qty); flash('#1b5e20'); playDing();
-    document.getElementById('manual-modal').classList.remove('show'); scanInput.focus();
+    addAsset(id, qty, cont); flash('#1b5e20'); playDing();
+    document.getElementById('manual-modal').classList.remove('show'); restoreScanFocus();
   }
-  function cancelManual() { document.getElementById('manual-modal').classList.remove('show'); scanInput.focus(); }
+  function cancelManual() { document.getElementById('manual-modal').classList.remove('show'); restoreScanFocus(); }
+
+  document.getElementById('dup-qty').addEventListener('keydown', e => { if (e.key === 'Enter') confirmDup(); });
+  document.getElementById('edit-qty').addEventListener('keydown', e => { if (e.key === 'Enter') confirmEdit(); });
+  document.getElementById('manual-id').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('manual-qty').focus(); });
+  document.getElementById('manual-qty').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('manual-container').focus(); });
+  document.getElementById('manual-container').addEventListener('keydown', e => { if (e.key === 'Enter') confirmManual(); });
+  searchInput.addEventListener('input', renderSearch);
 
   function buildFilename() {
-    const now = new Date();
-    const pad = n => n.toString().padStart(2,'0');
+    const now = new Date(), pad = n => n.toString().padStart(2,'0');
     return `${sessionOrder}-${direction}-${sessionUser}-${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())} ${pad(now.getHours())}-${pad(now.getMinutes())}.csv`;
   }
 
   function buildCSV() {
-    const rows = ['AssetID,Qty,Timestamp'];
-    assets.forEach(a => rows.push(`${a.id},${a.qty},${a.ts.toISOString().replace('T',' ').substring(0,19)}`));
+    const rows = ['AssetID,Qty,ContainerID'];
+    assets.forEach(a => rows.push(`${escCSV(a.id)},${a.qty},${escCSV(a.container)}`));
     return rows.join('\n');
+  }
+
+  function escCSV(v) {
+    if (!v) return '';
+    if (/[,"\n]/.test(v)) return '"' + v.replace(/"/g,'""') + '"';
+    return v;
   }
 
   function triggerDownload(csv, filename) {
@@ -512,43 +594,31 @@
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url; a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   function saveSession() {
     if (assets.length === 0) { alert('No assets scanned yet.'); return; }
-    savedCSV = buildCSV();
-    savedFilename = buildFilename();
+    savedCSV = buildCSV(); savedFilename = buildFilename();
     const totalQty = assets.reduce((s,a) => s+a.qty, 0);
     document.getElementById('complete-filename').textContent = savedFilename;
     document.getElementById('complete-details').innerHTML = [
-      ['Order ID', sessionOrder],
-      ['Direction', direction],
-      ['User', sessionUser],
-      ['Description', sessionDesc || '—'],
-      ['Unique assets', assets.length],
-      ['Total qty', totalQty],
-    ].map(([l,v]) =>
-      `<div class="complete-row"><span class="complete-row-label">${l}</span><span class="complete-row-val">${v}</span></div>`
-    ).join('');
+      ['Order ID', sessionOrder], ['Direction', direction], ['User', sessionUser],
+      ['Description', sessionDesc || '—'], ['Unique assets', assets.length],
+      ['Total qty', totalQty], ['Container mode', containerMode ? 'On' : 'Off'],
+    ].map(([l,v]) => `<div class="complete-row"><span class="complete-row-label">${l}</span><span class="complete-row-val">${v}</span></div>`).join('');
     showScreen('complete-screen');
   }
 
-  function completeSession() {
-    triggerDownload(savedCSV, savedFilename);
-    setTimeout(resetApp, 400);
-  }
+  function completeSession() { triggerDownload(savedCSV, savedFilename); setTimeout(resetApp, 400); }
 
   function resetApp() {
-    assets = []; scanLog = []; direction = null;
-    savedCSV = ''; savedFilename = '';
+    assets = []; scanLog = []; direction = null; savedCSV = ''; savedFilename = '';
+    containerMode = false; lockContainer = false; lockedContainerID = ''; awaitingContainer = false; pendingAssetID = '';
     ['btn-in','btn-out'].forEach(id => document.getElementById(id).classList.remove('selected'));
     userInput.value = ''; orderInput.value = ''; descInput.value = '';
-    orderInput.classList.remove('warn','valid');
-    searchInput.value = '';
+    orderInput.classList.remove('warn','valid'); searchInput.value = '';
     startBtn.classList.remove('ready');
     document.getElementById('save-btn').disabled = false;
     document.getElementById('save-btn').textContent = 'Save & Finish';
@@ -564,7 +634,7 @@
     const banner = document.getElementById('summary-desc-banner');
     if (sessionDesc) { document.getElementById('summary-desc-text').textContent = sessionDesc; banner.style.display = 'block'; } else { banner.style.display = 'none'; }
     document.getElementById('summary-list-inner').innerHTML = assets.map((a,i) =>
-      `<div class="summary-item"><div class="si-num">${i+1}</div><div class="si-id">${a.id}</div><div class="si-qty">${a.qty}</div><div class="si-ts">${fmtTime(a.ts)}</div></div>`
+      `<div class="summary-item"><div class="si-num">${i+1}</div><div class="si-id">${escHtml(a.id)}</div><div class="si-qty">${a.qty}</div><div class="si-container">${escHtml(a.container)||'—'}</div></div>`
     ).join('');
     showScreen('summary-screen');
   }
@@ -582,9 +652,10 @@
     el.innerHTML = scanLog.map(s =>
       `<div class="recent-item">
         <div class="recent-asset">${escHtml(s.id)}</div>
+        ${s.container ? `<div class="recent-container">${escHtml(s.container)}</div>` : ''}
         <div class="recent-qty">${s.qty > 1 ? 'x'+s.qty : ''}</div>
-        <div class="recent-time">${fmtTime(s.ts)}</div>
-        <button class="icon-btn edit-btn" onclick="promptEdit('${escAttr(s.id)}')" title="Edit qty">&#x270E;</button>
+        <div style="font-size:0.7rem;color:#444;min-width:46px;text-align:right;flex-shrink:0;">${fmtTime(s.ts)}</div>
+        <button class="icon-btn edit-btn" onclick="promptEdit('${escAttr(s.id)}')" title="Edit">&#x270E;</button>
         <button class="icon-btn remove-btn" onclick="promptRemove('${escAttr(s.id)}')" title="Remove">&#x2715;</button>
       </div>`
     ).join('');
@@ -594,7 +665,7 @@
     const el = document.getElementById('totals-list');
     if (!assets.length) { el.innerHTML = '<div class="empty-msg">No scans yet</div>'; return; }
     el.innerHTML = assets.slice().sort((a,b) => a.id.localeCompare(b.id)).map(a =>
-      `<div class="totals-item"><div class="totals-asset">${escHtml(a.id)}</div><div class="totals-count">${a.qty}</div></div>`
+      `<div class="totals-item"><div class="totals-asset">${escHtml(a.id)}</div>${a.container?`<div class="totals-container">${escHtml(a.container)}</div>`:''}<div class="totals-count">${a.qty}</div></div>`
     ).join('');
   }
 
@@ -605,12 +676,12 @@
     const matches = assets.filter(a => a.id.toLowerCase().includes(q));
     if (!matches.length) { el.innerHTML = '<div class="sr-not-found">Not scanned yet</div>'; return; }
     el.innerHTML = matches.map(a =>
-      `<div class="search-result"><div class="sr-asset">${escHtml(a.id)}</div><div class="sr-qty" style="margin-right:6px;">x${a.qty}</div><div class="sr-found">&#x2713; Scanned</div></div>`
+      `<div class="search-result"><div class="sr-asset">${escHtml(a.id)}</div><div class="sr-qty" style="margin-right:4px;">x${a.qty}</div><div class="sr-found">&#x2713;</div></div>`
     ).join('');
   }
 
-  function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-  function escAttr(s) { return s.replace(/'/g,"\\'"); }
+  function escHtml(s) { if (!s) return ''; return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function escAttr(s) { if (!s) return ''; return String(s).replace(/'/g,"\\'"); }
 
   function flash(color) {
     const f = document.getElementById('flash');
